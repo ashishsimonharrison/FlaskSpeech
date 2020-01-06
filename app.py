@@ -3,7 +3,7 @@ from data_generator import AudioGenerator
 from keras import backend as K
 from utils import int_sequence_to_text
 from IPython.display import Audio
-
+import wave
 import sample_models as sm
 model_end = sm.final_model(input_dim=13,
                         filters=200,
@@ -44,16 +44,25 @@ app = Flask(__name__)
 
 @app.route('/upload')
 def upload_file():
-   return render_template('Upload.html')
+   return render_template('index.html')
 	
-@app.route('/uploader', methods = ['GET', 'POST'])
+@app.route('/uploader')
 def upload_file1():
-   if request.method == 'POST':
-      f = request.files['file']
+      #print(request.files['audio_data'].filename)
       
-      text = get_predictions_rec(input_to_softmax=model_end, a_path=r'LibriSpeech\test-data'+'\\'+ f.filename,
+      
+      abc = "output.wav"
+      text = get_predictions_rec(input_to_softmax=model_end, a_path=abc,
                model_path='results/model_end.h5')
       return render_template('abc.html',text = text)
-		
+
+@app.route('/messages', methods = ['POST','GET'])
+def api_message():
+   
+   f = open('./file.wav', 'wb')
+   f.write(request.data)
+   f.close()
+   return "Done"
+
 if __name__ == '__main__':
    app.run(debug = False, threaded=False)
