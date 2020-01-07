@@ -6,3 +6,4 @@ librosa==0.5.1
 opencv-python
 python-speech-features==0.5
 seaborn==0.7.1
+soundfile
