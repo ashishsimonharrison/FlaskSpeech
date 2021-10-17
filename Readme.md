@@ -5,3 +5,4 @@
 3. python app.py
 
 4. Upload audio file from LibriSpeech\test-data
+5. You'll get the result as O/P
